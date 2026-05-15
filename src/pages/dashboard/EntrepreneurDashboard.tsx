@@ -1,5 +1,7 @@
 import { MeetingCalendar } from '../../components/calendar/MeetingCalendar';
 import { DocumentChamber } from '../../components/documents/DocumentChamber';
+import { PaymentDashboard } from '../../components/payments/PaymentDashboard';
+import { Joyride, EventHandler, STATUS, Step } from 'react-joyride';
 import { VideoCall } from '../../components/video/VideoCall';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -17,7 +19,7 @@ import { investors } from '../../data/users';
 export const EntrepreneurDashboard: React.FC = () => {
   const { user } = useAuth();
   const [collaborationRequests, setCollaborationRequests] = useState<CollaborationRequest[]>([]);
-  const [recommendedInvestors, setRecommendedInvestors] = useState(investors.slice(0, 3));
+  const recommendedInvestors = investors.slice(0, 3);
   
   useEffect(() => {
     if (user) {
@@ -39,10 +41,45 @@ export const EntrepreneurDashboard: React.FC = () => {
   
   const pendingRequests = collaborationRequests.filter(req => req.status === 'pending');
   
-  return (
+  // Joyride (Guided Tour) ka Setup
+  const [runTour, setRunTour] = useState(true); 
+  
+  const tourSteps: Step[] = [
+    {
+      target: '.tour-step-welcome',
+      content: 'Welcome to your Business Nexus Dashboard! Let us show you around.',
+    },
+    {
+      target: '.tour-step-calendar',
+      content: 'Schedule your meetings with investors right from this calendar.',
+    },
+    {
+      target: '.tour-step-payment',
+      content: 'Manage your funds and transactions here.',
+    }
+  ];
 
+  const handleJoyrideCallback: EventHandler = (data) => {
+    const { status } = data;
+    const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
+    if (finishedStatuses.includes(status)) {
+      setRunTour(false);
+    }
+  };
+  
+  return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex justify-between items-center">
+      
+      {/* Joyride Component Render Kiya Hai */}
+      <Joyride
+        steps={tourSteps}
+        run={runTour}
+        continuous={true}
+        onEvent={handleJoyrideCallback}
+      />
+
+      {/* 1. YAHAN TOUR-STEP-WELCOME LAGAYA HAI */}
+      <div className="flex justify-between items-center tour-step-welcome">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Welcome, {user.name}</h1>
           <p className="text-gray-600">Here's what's happening with your startup today</p>
@@ -118,15 +155,6 @@ export const EntrepreneurDashboard: React.FC = () => {
         </Card>
       </div>
       
-      <Card>
-        <CardHeader>
-          <h2 className="text-lg font-medium text-gray-900">Meeting Calendar</h2>
-        </CardHeader>
-        <CardBody>
-          <MeetingCalendar />
-        </CardBody>
-      </Card>
-      
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Collaboration requests */}
         <div className="lg:col-span-2 space-y-4">
@@ -182,20 +210,26 @@ export const EntrepreneurDashboard: React.FC = () => {
           </Card>
         </div>
       </div>
-      {/* Meeting Calendar Section */}
-        <div className="mt-8">
-          <MeetingCalendar />
-        </div>
-        {/* ---> Ab YAHAN apna naya Video Call paste karein <--- */}
-        <div className="mt-8">
-          <VideoCall />
-        </div>
-        {/* ---------------------------------------------------- */}
-        {/* Document Chamber Section */}
-<div className="mt-8">
-  <DocumentChamber />
-</div>
-    </div>
 
+      {/* 2. YAHAN TOUR-STEP-CALENDAR LAGAYA HAI */}
+      <div className="mt-8 tour-step-calendar">
+        <MeetingCalendar />
+      </div>
+
+      <div className="mt-8">
+        <VideoCall />
+      </div>
+
+      {/* Document Chamber Section */}
+      <div className="mt-8">
+        <DocumentChamber />
+      </div>
+
+      {/* 3. YAHAN TOUR-STEP-PAYMENT LAGAYA HAI */}
+      <div className="mt-8 tour-step-payment">
+        <PaymentDashboard />
+      </div>
+
+    </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DocumentChamber } from '../../components/documents/DocumentChamber';
+import { PaymentDashboard } from '../../components/payment/PaymentDashboard';
 import { Link } from 'react-router-dom';
 import { Users, PieChart, Filter, Search, PlusCircle } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
@@ -8,8 +9,9 @@ import { Input } from '../../components/ui/Input';
 import { Badge } from '../../components/ui/Badge';
 import { EntrepreneurCard } from '../../components/entrepreneur/EntrepreneurCard';
 import { MeetingCalendar } from '../../components/calendar/MeetingCalendar';
+import { VideoCall } from '../../components/video/VideoCall';
+import { WalletBalance } from '../../components/payments/WalletBalance';
 import { useAuth } from '../../context/AuthContext';
-import { Entrepreneur } from '../../types';
 import { entrepreneurs } from '../../data/users';
 import { getRequestsFromInvestor } from '../../data/collaborationRequests';
 
@@ -22,7 +24,6 @@ export const InvestorDashboard: React.FC = () => {
   
   // Get collaboration requests sent by this investor
   const sentRequests = getRequestsFromInvestor(user.id);
-  const requestedEntrepreneurIds = sentRequests.map(req => req.entrepreneurId);
   
   // Filter entrepreneurs based on search and industry filters
   const filteredEntrepreneurs = entrepreneurs.filter(entrepreneur => {
@@ -149,6 +150,8 @@ export const InvestorDashboard: React.FC = () => {
         </Card>
       </div>
       
+      <WalletBalance />
+      
       <Card>
         <CardHeader>
           <h2 className="text-lg font-medium text-gray-900">Meeting Calendar</h2>
@@ -205,6 +208,7 @@ export const InvestorDashboard: React.FC = () => {
         {/* Document Chamber Section */}
 <div className="mt-8">
   <DocumentChamber />
+  
 </div>
     </div>
   );

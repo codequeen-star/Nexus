@@ -1,4 +1,6 @@
 import { MeetingCalendar } from '../../components/calendar/MeetingCalendar';
+import { DocumentChamber } from '../../components/documents/DocumentChamber';
+import { VideoCall } from '../../components/video/VideoCall';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Users, Bell, Calendar, TrendingUp, AlertCircle, PlusCircle } from 'lucide-react';
@@ -184,6 +186,16 @@ export const EntrepreneurDashboard: React.FC = () => {
         <div className="mt-8">
           <MeetingCalendar />
         </div>
+        {/* ---> Ab YAHAN apna naya Video Call paste karein <--- */}
+        <div className="mt-8">
+          <VideoCall />
+        </div>
+        {/* ---------------------------------------------------- */}
+        {/* Document Chamber Section */}
+<div className="mt-8">
+  <DocumentChamber />
+</div>
     </div>
+
   );
 };

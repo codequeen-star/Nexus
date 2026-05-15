@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DocumentChamber } from '../../components/documents/DocumentChamber';
 import { Link } from 'react-router-dom';
 import { Users, PieChart, Filter, Search, PlusCircle } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
@@ -196,6 +197,15 @@ export const InvestorDashboard: React.FC = () => {
         <div className="mt-8">
           <MeetingCalendar />
         </div>
+        {/* ---> Ab YAHAN apna naya Video Call paste karein <--- */}
+        <div className="mt-8">
+          <VideoCall />
+        </div>
+        {/* ---------------------------------------------------- */}
+        {/* Document Chamber Section */}
+<div className="mt-8">
+  <DocumentChamber />
+</div>
     </div>
   );
 };

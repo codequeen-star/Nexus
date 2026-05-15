@@ -6,6 +6,7 @@ import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
 import { Badge } from '../../components/ui/Badge';
 import { EntrepreneurCard } from '../../components/entrepreneur/EntrepreneurCard';
+import { MeetingCalendar } from '../../components/calendar/MeetingCalendar';
 import { useAuth } from '../../context/AuthContext';
 import { Entrepreneur } from '../../types';
 import { entrepreneurs } from '../../data/users';
@@ -147,6 +148,15 @@ export const InvestorDashboard: React.FC = () => {
         </Card>
       </div>
       
+      <Card>
+        <CardHeader>
+          <h2 className="text-lg font-medium text-gray-900">Meeting Calendar</h2>
+        </CardHeader>
+        <CardBody>
+          <MeetingCalendar />
+        </CardBody>
+      </Card>
+      
       {/* Entrepreneurs grid */}
       <div>
         <Card>
@@ -182,6 +192,10 @@ export const InvestorDashboard: React.FC = () => {
           </CardBody>
         </Card>
       </div>
+      {/* Meeting Calendar Section */}
+        <div className="mt-8">
+          <MeetingCalendar />
+        </div>
     </div>
   );
 };

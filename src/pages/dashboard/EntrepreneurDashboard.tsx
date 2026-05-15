@@ -1,3 +1,4 @@
+import { MeetingCalendar } from '../../components/calendar/MeetingCalendar';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Users, Bell, Calendar, TrendingUp, AlertCircle, PlusCircle } from 'lucide-react';
@@ -37,6 +38,7 @@ export const EntrepreneurDashboard: React.FC = () => {
   const pendingRequests = collaborationRequests.filter(req => req.status === 'pending');
   
   return (
+
     <div className="space-y-6 animate-fade-in">
       <div className="flex justify-between items-center">
         <div>
@@ -114,6 +116,15 @@ export const EntrepreneurDashboard: React.FC = () => {
         </Card>
       </div>
       
+      <Card>
+        <CardHeader>
+          <h2 className="text-lg font-medium text-gray-900">Meeting Calendar</h2>
+        </CardHeader>
+        <CardBody>
+          <MeetingCalendar />
+        </CardBody>
+      </Card>
+      
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Collaboration requests */}
         <div className="lg:col-span-2 space-y-4">
@@ -169,6 +180,10 @@ export const EntrepreneurDashboard: React.FC = () => {
           </Card>
         </div>
       </div>
+      {/* Meeting Calendar Section */}
+        <div className="mt-8">
+          <MeetingCalendar />
+        </div>
     </div>
   );
 };
